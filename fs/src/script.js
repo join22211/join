@@ -296,40 +296,46 @@ function streamDownload() {
   window.location.href = openstreamlink;
 }
 
-
 function copyStreamLink() {
+  const openstreamlink = streamlink;
+  window.location.href = openstreamlink;
+}
+
+function copyStreamLinkToClipboard() {
   const linkToCopy = streamlink;
 
-  try {
-    // Modern browsers:
-    navigator.clipboard.writeText(linkToCopy)
-      .then(() => {
-        console.log('Stream link copied to clipboard!');
-      })
-      .catch(err => {
-        console.error('Failed to copy link: ', err);
-      });
-  } catch (err) {
-    // Older browsers:
-    const textArea = document.createElement("textarea");
-    textArea.value = linkToCopy;
-
-    // Avoid scrolling to bottom:
-    textArea.style.top = "0";
-    textArea.style.left = "0";
-    textArea.style.position = "fixed";
-
-    document.body.appendChild(textArea);
-    textArea.focus();
-    textArea.select();
-
-    try {
-      document.execCommand('copy');
-      console.log('Stream link copied to clipboard!');
-    } catch (err) {
-      console.error('Failed to copy link: ', err);
-    }
-
-    document.body.removeChild(textArea);
+  // Use a polyfill for navigator.clipboard.writeText if needed:
+  if (!navigator.clipboard) {
+    navigator.clipboard = {
+      writeText: function(text) {
+        return new Promise((resolve, reject) => {
+          try {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            resolve();
+          } catch (err) {
+            reject(err);
+          }
+        });
+      }
+    };
   }
+
+  navigator.clipboard.writeText(linkToCopy)
+    .then(() => {
+      console.log('Stream link copied to clipboard!');
+      // Provide user feedback (optional):
+      alert('Stream link copied successfully!');
+    })
+    .catch(err => {
+      console.error('Failed to copy link: ', err);
+      // Handle errors gracefully:
+      alert('Failed to copy link. Please try manually.');
+    });
 }
+
