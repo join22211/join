@@ -296,17 +296,40 @@ function streamDownload() {
   window.location.href = openstreamlink;
 }
 
-function copyStreamLink() {
-    const streamlink = streamlink;
-    
-    const tempInput = document.createElement('input');
-    tempInput.value = streamlink;
-    document.body.appendChild(tempInput);
 
-    tempInput.select();
-    tempInput.setSelectionRange(0, 99999); 
-    document.execCommand('copy');
-    document.body.removeChild(tempInput);
-    
-    alert('Stream link copied to clipboard!');
+function copyStreamLink() {
+  const linkToCopy = streamlink;
+
+  try {
+    // Modern browsers:
+    navigator.clipboard.writeText(linkToCopy)
+      .then(() => {
+        console.log('Stream link copied to clipboard!');
+      })
+      .catch(err => {
+        console.error('Failed to copy link: ', err);
+      });
+  } catch (err) {
+    // Older browsers:
+    const textArea = document.createElement("textarea");
+    textArea.value = linkToCopy;
+
+    // Avoid scrolling to bottom:
+    textArea.style.top = "0";
+    textArea.style.left = "0";
+    textArea.style.position = "fixed";
+
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+      document.execCommand('copy');
+      console.log('Stream link copied to clipboard!');
+    } catch (err) {
+      console.error('Failed to copy link: ', err);
+    }
+
+    document.body.removeChild(textArea);
+  }
 }
