@@ -297,9 +297,8 @@ function streamDownload() {
 }
 
 function copyStreamLink() {
-  const linkToCopy = streamlink;
+  const linkToCopy = streamlink.toLowerCase();
 
-  // Use a polyfill for navigator.clipboard.writeText if needed:
   if (!navigator.clipboard) {
     navigator.clipboard = {
       writeText: function(text) {
@@ -324,12 +323,10 @@ function copyStreamLink() {
   navigator.clipboard.writeText(linkToCopy)
     .then(() => {
       console.log('Stream link copied to clipboard!');
-      // Provide user feedback (optional):
       alert('Stream link copied successfully!');
     })
     .catch(err => {
       console.error('Failed to copy link: ', err);
-      // Handle errors gracefully:
       alert('Failed to copy link. Please try manually.');
     });
 }
