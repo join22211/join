@@ -297,11 +297,6 @@ function streamDownload() {
 }
 
 function copyStreamLink() {
-  const openstreamlink = streamlink;
-  window.location.href = openstreamlink;
-}
-
-function copyStreamLinkToClipboard() {
   const linkToCopy = streamlink;
 
   // Use a polyfill for navigator.clipboard.writeText if needed:
