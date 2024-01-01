@@ -225,8 +225,8 @@ const controls = [
     'progress',
     'current-time',
     'duration',
-    'mute',
-    'volume',
+    //'mute',
+    //'volume',
     'captions',
     'settings',
     'pip',
@@ -291,9 +291,22 @@ function copyToClipboard(text) {
     document.body.removeChild(textarea);
 }
 
-function copyStreamLink() {
-    const streamlink = streamlink;
-    copyToClipboard(streamlink);
-    alert("Direct Download Link Copied..!");
+function streamDownload() {
+  const openstreamlink = streamlink;
+  window.location.href = openstreamlink;
 }
 
+function copyStreamLink() {
+    const streamlink = streamlink;
+    
+    const tempInput = document.createElement('input');
+    tempInput.value = streamlink;
+    document.body.appendChild(tempInput);
+
+    tempInput.select();
+    tempInput.setSelectionRange(0, 99999); 
+    document.execCommand('copy');
+    document.body.removeChild(tempInput);
+    
+    alert('Stream link copied to clipboard!');
+}
