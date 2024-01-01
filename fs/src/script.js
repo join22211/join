@@ -273,22 +273,8 @@ function mx_player() {
 
 function n_player() {
     const openstreamlink = streamlink;
-    const openNplayer = `intent:${openstreamlink}#Intent;package=uplayer.video.player;end`;
+    const openNplayer = `intent:${openstreamlink}#Intent;package=com.newin.nplayer.pro;end`;
     window.location.href = openNplayer;
-}
-
-function streamDownload() {
-    const openstreamlink = streamlink;
-    window.location.href = openstreamlink;
-}
-
-function copyToClipboard(text) {
-    const textarea = document.createElement('textarea');
-    textarea.value = text;
-    document.body.appendChild(textarea);
-    textarea.select();
-    document.execCommand('copy');
-    document.body.removeChild(textarea);
 }
 
 function streamDownload() {
