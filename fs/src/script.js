@@ -272,9 +272,11 @@ function mx_player() {
 }
 
 function n_player() {
-    const openstreamlink = streamlink;
-    const openNplayer = `intent:${openstreamlink}#Intent;package=com.newin.nplayer.pro;end`;
-    window.location.href = openNplayer;
+    const openStreamLink = streamlink;
+    const intent = new Intent(Intent.ACTION_VIEW);
+    intent.setDataAndType(Uri.parse(openStreamLink), "video/*");
+    const chooser = Intent.createChooser(intent, "Choose a player");
+    startActivity(chooser);
 }
 
 function streamDownload() {
