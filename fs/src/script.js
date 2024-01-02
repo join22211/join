@@ -272,12 +272,18 @@ function mx_player() {
 }
 
 function n_player() {
+  try {
     const openStreamLink = streamlink;
     const intent = new Intent(Intent.ACTION_VIEW);
     intent.setDataAndType(Uri.parse(openStreamLink), "video/*");
+    intent.addCategory(Intent.CATEGORY_DEFAULT);
     const chooser = Intent.createChooser(intent, "Choose a player");
     startActivity(chooser);
+  } catch (error) {
+    console.error("Error opening stream:", error);
+  }
 }
+
 
 function streamDownload() {
   const openstreamlink = streamlink;
