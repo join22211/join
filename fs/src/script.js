@@ -272,21 +272,34 @@ function mx_player() {
 }
 
 function n_player() {
-  const openStreamLink = streamlink;
-
-  // Check if nPlayer is installed
-  const packageName = "com.newin.nplayer.pro"; // Adjust based on nPlayer version you have
+  const openstreamlink = streamlink;
+  const packageName = "com.newin.nplayer.pro"; // Adjust based on nPlayer version
   const packageManager = context.getPackageManager();
   const packageInfo = packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
 
   if (packageInfo) {
-    // nPlayer is installed, open stream directly
+    // Display alert for confirmation
+    alert("nPlayer is installed. Launching stream...");
+
+    // Create intent for nPlayer
     const intent = new Intent(Intent.ACTION_VIEW);
-    intent.setDataAndType(Uri.parse(openStreamLink), "video/*");
-    intent.setComponent(new ComponentName(packageName, "com.newin.nplayer.activity.PlayerActivity")); // Adjust based on nPlayer version you have
-    startActivity(intent);
+    intent.setDataAndType(Uri.parse(openstreamlink), "video/*");
+    intent.setComponent(new ComponentName(packageName, "com.newin.nplayer.activity.PlayerActivity")); // Adjust activity name
+
+    try {
+      // Display alert for debugging (optional)
+      // alert("Launching nPlayer with intent:", intent);
+      context.startActivity(intent);
+    } catch (error) {
+      // Display error alert for user feedback
+      alert("Error launching nPlayer: " + error.message);
+    }
+  } else {
+    // Display alert for missing app scenario
+    alert("nPlayer is not installed. Please install nPlayer to play the stream.");
   }
 }
+
 
 function streamDownload() {
   const openstreamlink = streamlink;
