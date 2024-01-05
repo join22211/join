@@ -273,7 +273,7 @@ function mx_player() {
 
 function n_player() {
     const openstreamlink = streamlink;
-    const openNplayer = `intent:${openstreamlink}#Intent;package=com.newin.nplayer.pro;end`;
+    const openNplayer = `nplayer-${openstreamlink}`;
     window.location.href = openNplayer;
 }
 
