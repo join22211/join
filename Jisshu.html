@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://cdn.jsdelivr.net/gh/weebzone/weebzone/data/Surf-TG/src/ico.png" type="image/x-icon">
+    <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/weebzone/weebzone/data/Surf-TG/src/ico.png" type="image/x-icon">
+    <title>JISSHU: Available Channel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link id="theme-link" rel="stylesheet" href="https://bootswatch.com/5/cerulean/bootstrap.min.css">
+    <style>
+        body {
+            height: 100vh;
+            margin: 0;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            margin: auto;
+            padding: 0px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+
+        .content {
+            padding: 2px;
+            overflow: hidden;
+            flex: 0 0 calc(15% - 20px);
+            margin: 10px;
+            transition: all 0.3s;
+            align-items: center;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .card {
+            align-items: center;
+        }
+
+        .content:hover {
+            transform: scale(1.10);
+        }
+
+        /* For WebKit browsers (Chrome, Safari, etc.) */
+        /* Track */
+        ::-webkit-scrollbar {
+            width: 5px;
+            /* Set the width of the scrollbar */
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            /* Color of the scrollbar handle */
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+            /* Color of the scrollbar handle on hover */
+        }
+
+        .img-container {
+            padding-top: 2%;
+            width: fit-content;
+            height: 120px;
+            overflow: hidden;
+            border-radius: 50%;
+        }
+
+        .img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        @media (max-width: 1200px) {
+            .content {
+                flex: 0 0 calc(20% - 20px);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .content {
+                flex: 0 0 calc(33% - 20px);
+            }
+
+            .navbar {
+                padding-right: 15px;
+                padding-left: 15px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .content {
+                flex: 0 0 calc(50% - 20px);
+
+            }
+
+            .navbar {
+                padding-right: 15px;
+                padding-left: 15px;
+            }
+        }
+
+        .channels {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .channel-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 5px solid #000;
+            border-radius: 8px;
+            padding: 10px;
+            width: 150px;
+            transition: transform 0.3s;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .channel-card:hover {
+            transform: scale(1.1);
+        }
+
+        .channel-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .channel-card h5 {
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        @keyframes fadeInOut {
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .text-home {
+            color: red;
+            font-size: 2em;
+            animation: fadeInOut 1.50s infinite;
+        }
+
+        .text-danger {
+            color: red;
+            font-size: 1em;
+            animation: fadeInOut 1.50s infinite;
+        }
+
+        #heartIconWrapper {
+            animation: fadeInOut 0.50s infinite;
+        }
+
+        .toggle-switch {
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+            position: relative;
+        }
+
+        .toggle-switch input {
+            display: none;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 30px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            border-radius: 50%;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+        }
+
+        input:checked+.slider {
+            background-color: #000;
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(30px);
+        }
+
+        .day {
+            background-color: #ffeb3b;
+        }
+
+        .night {
+            background-color: #3f51b5;
+        }
+
+        .day:before {
+            content: "\2600";
+            color: #ffeb3b;
+        }
+
+        .night:before {
+            content: "\1F319";
+            color: #3f51b5;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Jisshu bot</a>
+            <label class="toggle-switch">
+                <input type="checkbox" id="theme-toggle">
+                <span class="slider day"></span>
+            </label>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+        </div>
+    </nav>
+
+    <!-- Offcanvas Sidebar -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="d-flex">
+                <!-- Your content for the offcanvas goes here -->
+                <img src="https://cdn.jsdelivr.net/gh/Jisshubot/Jisshubot/images/IMG_20240620_173443_817.jpg" width="80" height="80" class="rounded" style="box-shadow: 3px 7px 15px white;" alt="">
+                <div class="p-3">
+                    <h4 class="offcanvas-title font-semibold wow animate__animated animate__fadeInLeft" id="offcanvasWithBothOptionsLabel" <h4 class="offcanvas-title font-semibold wow animate__animated animate__fadeInLeft" id="offcanvasWithBothOptionsLabel" style="text-shadow: 3px 5px 11px black;">Neha bot</h4>
+                        <p class="text-danger">The One & Only</p>
+                </div>
+            </div>
+            <div class="d-grid gap-2">
+                <a href="#" class="btn btn-lg btn-primary d-flex align-items-center justify-content-center">
+                    <div class="rounded-circle overflow-hidden me-2" style="width: 30px; height: 30px;">
+                        <img src="https://cdn.jsdelivr.net/gh/Jisshubot/Jisshubot/images/IMG_20240619_232620_226.jpg" alt="Small Photo" class="w-100 h-100">
+                    </div>
+                    Block button
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div style="width: fit-content; margin: auto;">
+        <div class="text-home" style="font-size: 25px;">Available Sources</div>
+    </div>
+
+    <div class="channels">
+        <a href="#" class="channel-card">
+            <img src="https://cdn.jsdelivr.net/gh/Jisshubot/Jisshubot/images/IMG_20240619_232620_226.jpg" alt="Zoro Tv">
+            <h5>Zoro Tv</h5>
+            <span class="badge bg-primary">CHANNEL</span>
+        </a>
+        <a href="#" class="channel-card">
+            <img src="https://cdn.jsdelivr.net/gh/Jisshubot/Jisshubot/images/IMG_20240619_232608_120.jpg" alt="Test Channel">
+            <h5>Test Channel</h5>
+            <span class="badge bg-primary">CHANNEL</span>
+        </a>
+        <a href="#" class="channel-card">
+            <img src="https://cdn.jsdelivr.net/gh/Jisshubot/Jisshubot/images/IMG_20240620_173443_817.jpg" alt="Channel 3">
+            <h5>Channel 3</h5>
+            <span class="badge bg-primary">CHANNEL</span>
+        </a>
+    </div>
+
+    <footer class="footer mt-auto py-3 text-muted" style="color: white;">
+        <div class="container d-flex justify-content-center align-items-center" style="width: 100%; padding: 0 10px;">
+            <p class="float-end">
+                Made with <span id="heartIconWrapper">
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-heart-fill" fill="red" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
+                    </svg>
+                </span> by <a href="https://t.me/IM_JISSHU" target="_blank">ZISHAN KHAN</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const toggleButton = document.getElementById('theme-toggle');
+            const themeLink = document.getElementById('theme-link');
+            const slider = document.querySelector('.slider');
+
+            toggleButton.addEventListener('click', function () {
+                if (themeLink.getAttribute('href') === 'https://bootswatch.com/5/cerulean/bootstrap.min.css') {
+                    themeLink.setAttribute('href', 'https://bootswatch.com/5/sketchy/bootstrap.min.css');
+                    slider.classList.remove('day');
+                    slider.classList.add('night');
+                } else {
+                    themeLink.setAttribute('href', 'https://bootswatch.com/5/cerulean/bootstrap.min.css');
+                    slider.classList.remove('night');
+                    slider.classList.add('day');
+                }
+            });
+
+            let lazyImages = document.querySelectorAll('.lzy_img');
+            let imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        let img = entry.target;
+                        img.src = img.dataset.src;
+                        observer.unobserve(img);
+                    }
+                });
+            });
+
+            lazyImages.forEach(image => {
+                imageObserver.observe(image);
+            });
+
+            document.addEventListener("contextmenu", function (e) {
+                e.preventDefault();
+            });
+
+            document.addEventListener('keydown', function (e) {
+                if (
+                    e.key === 'F12' ||
+                    (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+                    (e.ctrlKey && e.key === 'u') ||
+                    e.ctrlKey ||
+                    e.shiftKey ||
+                    e.altKey
+                ) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+</body>
+
+                      </html>
